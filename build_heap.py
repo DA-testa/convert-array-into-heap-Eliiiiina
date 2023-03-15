@@ -42,12 +42,12 @@ def heapify(data, n, i):
 
 def main():
     # Get input from the user
-    input_type = input("Enter I for keyboard input or F for file input: ")
+    input_type = input()
     if input_type.upper() == "I":
-        n = int(input("Enter the number of elements: "))
-        data = list(map(int, input("Enter the elements separated by spaces: ").split()))
+        n = int(input())
+        data = list(map(int, input().split()))
     elif input_type.upper() == "F":
-        filename = input("Enter the filename: ")
+        filename = input()
         with open(filename) as file:
             n = int(file.readline())
             data = list(map(int, file.readline().split()))
