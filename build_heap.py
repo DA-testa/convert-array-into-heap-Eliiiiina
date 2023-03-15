@@ -3,56 +3,70 @@
 
 def build_heap(data):
     swaps = []
-    # TODO: Creat heap and heap sort
-    # try to achieve  O(n) and not O(n2)
-    n= len(data)
-    for i in range(n//2-1, -1, -1):
-        swaps += sift_down(data,i)
+    n = len(data)
+
+    # Starting from the middle, heapify each parent node
+    # down to the bottom of the heap
+    for i in range(n // 2 - 1, -1, -1):
+        swaps += heapify(data, n, i)
+
+    # After the heap is built, perform the actual heap sort
+    for i in range(n - 1, 0, -1):
+        data[0], data[i] = data[i], data[0]
+        swaps.append((0, i))
+        swaps += heapify(data, i, 0)
+
     return swaps
 
-def sift_down(data,i):
+def heapify(data, n, i):
     swaps = []
-    n = len(data)
-    min_index = i
-    left_child = 2 * i + 1
-    if left_child < n and data[left_child] < data[min_index]:
-        min_index = left_child
-    right_child = 2 * i + 2
-    if right_child < n and data[right_child] < data[min_index]:
-        min_index = right_child
-    if i != min_index:
-        data[i], data[min_index] = data[min_index], data[i]
-        swaps.append((i, min_index))
-        swaps += sift_down(data, min_index)
+    largest = i
+    left = 2 * i + 1
+    right = 2 * i + 2
+
+    # Check if left child is larger than parent
+    if left < n and data[left] > data[largest]:
+        largest = left
+
+    # Check if right child is larger than parent
+    if right < n and data[right] > data[largest]:
+        largest = right
+
+    # If one of the children is larger, swap with parent
+    if largest != i:
+        data[i], data[largest] = data[largest], data[i]
+        swaps.append((i, largest))
+        swaps += heapify(data, n, largest)
+
     return swaps
 
 def main():
-    
-    # TODO : add input and corresponding checks
-    # add another input for I or F 
-    # first two tests are from keyboard, third test is from a file
+    # Get input from the user
+    input_type = input("Enter I for keyboard input or F for file input: ")
+    if input_type.upper() == "I":
+        n = int(input("Enter the number of elements: "))
+        data = list(map(int, input("Enter the elements separated by spaces: ").split()))
+    elif input_type.upper() == "F":
+        filename = input("Enter the filename: ")
+        with open(filename) as file:
+            n = int(file.readline())
+            data = list(map(int, file.readline().split()))
+    else:
+        print("Invalid input type.")
+        return
 
+    # Check if length of data is the same as the specified length
+    if len(data) != n:
+        print("Input length does not match the specified length.")
+        return
 
-    # input from keyboard
-    n = int(input())
-    data = list(map(int, input().split()))
-
-    # checks if lenght of data is the same as the said lenght
-    assert len(data) == n
-
-    # calls function to assess the data 
-    # and give back all swaps
+    # Call build_heap to sort the data and get the swaps
     swaps = build_heap(data)
 
-    # TODO: output how many swaps were made, 
-    # this number should be less than 4n (less than 4*len(data))
-
-
-    # output all swaps
-    print(len(swaps))
+    # Output the number of swaps and the list of swaps
+    print("Number of swaps:", len(swaps))
     for i, j in swaps:
         print(i, j)
-
 
 if __name__ == "__main__":
     main()
