@@ -40,5 +40,6 @@ def main():
     for i, j in swaps: 
         print(i, j) 
         
+        
 if __name__ == "_main_":
     main()
