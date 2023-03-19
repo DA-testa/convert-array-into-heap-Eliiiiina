@@ -1,5 +1,6 @@
 # python3
 #Elīna Miltiņa 221RDC017 18.grupa
+
 import os
 def build_heap(data):
     swaps = []
