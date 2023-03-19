@@ -30,7 +30,7 @@ def main():
         assert len(data) == m 
     elif "F" in ievade: 
         fails = input() 
-        atrasanas = '/tests/' 
+        atrasanas = './tests/' 
         faila_vieta = os.path.join(atrasanas, fails) 
         with open(faila_vieta, mode="r") as file: 
             m = int(file.readline()) 
